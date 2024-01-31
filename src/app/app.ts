@@ -16,7 +16,7 @@ import { SignupController } from './controllers/SignupController';
 
 const app = angular.module('myApp', ['ngMaterial','ngRoute','ngAnimate']);
 
-app.controller('MainCtrl', function($scope: any, $mdSidenav, $location, $log, $timeout, $mdDialog, $rootScope, $mdMenu, $document, $window, $mdMedia, AuthService, LoadingService) {
+app.controller('MainCtrl', function($scope: any, $mdSidenav, $location, $log, $timeout, $mdDialog, $rootScope, $mdMenu, $document, $window, $mdMedia, AuthService, LoadingService, $mdToast) {
   $scope.myInitFunction = function() {
     // Initialization code here
     if ($scope.currentTheme === 'light') {
@@ -386,6 +386,20 @@ app.service('AuthService', function($http: angular.IHttpService , $q: any, $loca
 
   return service;
 });
+
+app.service('ToastService', function($mdToast : angular.material.IToastService) {
+  var ToastService: any = {};
+
+  ToastService.showToast = function (message: string) {
+      $mdToast.show(
+        $mdToast.simple()
+        .textContent(message)
+        .toastClass('my-toast')
+        .hideDelay(2500))
+        
+      }
+      return ToastService;
+})
 
 app.factory('httpInterceptor', function($q: any, LoadingService: any) {
   return {
